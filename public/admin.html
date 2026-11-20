@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Управление — На месте</title>
+  <link rel="icon" href="/mark.svg">
+  <link rel="stylesheet" href="/site.css">
+  <script type="module" src="/admin.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/"><img src="/mark.svg" width="37" height="37" alt=""><span>на месте<span class="brand-dot">.</span></span></a>
+      <a class="button outline" href="/">Открыть сайт ↗</a>
+    </div>
+  </header>
+  <main class="wrap admin-shell">
+    <div class="admin-heading"><h1>Управление</h1><button id="logout" type="button" class="button light-outline" hidden>Выйти</button></div>
+    <p id="admin-message" class="form-status admin-notice" role="status">Проверяем вход…</p>
+    <form id="login" class="form-panel admin-login" hidden>
+      <label>Логин<input name="login" autocomplete="username" required maxlength="30"></label>
+      <label>Пароль<input name="password" type="password" autocomplete="current-password" required maxlength="256"></label>
+      <button type="submit" class="button primary">Войти</button>
+      <p class="form-status" role="status"></p>
+    </form>
+    <div id="dashboard" hidden>
+      <nav class="admin-tabs" aria-label="Управление сайтом">
+        <button data-tab="events" class="chip" type="button" aria-pressed="true">Расписание</button>
+        <button data-tab="polls" class="chip" type="button" aria-pressed="false">Голосования</button>
+        <button data-tab="inbox" class="chip" type="button" aria-pressed="false">Заявки</button>
+      </nav>
+      <section data-panel="events" class="admin-layout" aria-label="Расписание">
+        <form id="event-form" class="form-panel">
+          <h2 id="edit-title">Новое событие</h2>
+          <label>Название<input name="title" required minlength="2" maxlength="100"></label>
+          <div class="two-fields">
+            <label>Дата<input type="date" name="day" required min="2000-01-01" max="2099-12-31"></label>
+            <label>Время по Москве<input type="time" name="time" required></label>
+          </div>
+          <div class="two-fields">
+            <label>Формат<select name="category" required></select></label>
+            <label>Цена, ₽<input type="number" name="price" value="0" required min="0" max="100000" step="1"></label>
+          </div>
+          <label>Зал<input name="room" list="rooms" required minlength="2" maxlength="80"></label>
+          <datalist id="rooms"><option>Большой зал</option><option>Игровой зал</option><option>Камерный зал</option></datalist>
+          <label>Описание<textarea name="description" rows="3" required minlength="5" maxlength="450"></textarea></label>
+          <label class="checkbox"><input type="checkbox" name="published">Показать в афише</label>
+          <label class="checkbox"><input type="checkbox" name="demo">Пометить как демо</label>
+          <div class="admin-control-row">
+            <button type="submit" class="button primary">Сохранить событие</button>
+            <button type="button" id="event-reset" class="button light-outline" hidden>Отменить редактирование</button>
+          </div>
+          <p class="form-status" role="status"></p>
+        </form>
+        <div id="admin-events" class="admin-stack"></div>
+      </section>
+      <section data-panel="polls" class="admin-layout" aria-label="Голосования" hidden>
+        <form id="poll-form" class="form-panel">
+          <h2>Новое голосование</h2>
+          <label>Месяц для будущей афиши<input type="month" name="month" required placeholder="2027-01"></label>
+          <label>Варианты ответа<textarea name="labels" rows="5" required maxlength="650" placeholder="По одному варианту в строке"></textarea></label>
+          <p class="form-hint">Добавь от 2 до 8 вариантов. Одновременно может быть открыто одно голосование.</p>
+          <button type="submit" class="button primary">Открыть голосование</button>
+          <p class="form-status" role="status"></p>
+        </form>
+        <div id="admin-polls" class="admin-stack"></div>
+      </section>
+      <section data-panel="inbox" aria-label="Заявки" hidden>
+        <div class="filters">
+          <div class="chips" id="inbox-types" aria-label="Тип заявки"></div>
+          <label class="month-filter">Статус <select id="inbox-status"><option value="all">Все</option><option value="new">Новые</option><option value="progress">В работе</option><option value="closed">Закрытые</option></select></label>
+        </div>
+        <div id="admin-inbox" class="admin-stack"></div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

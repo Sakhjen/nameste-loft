@@ -1,0 +1,6 @@
+/data/
+/output/
+/speed-dating-poster-*.png
+.env
+.env.*
+.DS_Store
